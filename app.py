@@ -132,21 +132,21 @@ def index():
 
     query = Todo.query.filter_by(user_id=current_user.id)
 
-    # 🔎 Filter by category
+    # Filter by category
     if category and category != "All":
         query = query.filter(Todo.category == category)
 
-    # ✅ Filter by status
+    # Filter by status
     if status == "Completed":
         query = query.filter(Todo.completed == True)
     elif status == "Pending":
         query = query.filter(Todo.completed == False)
 
-    # 🔍 Search by title
+    # Search by title
     if search:
         query = query.filter(Todo.title.ilike(f"%{search}%"))
 
-    # 📄 Pagination (5 per page)
+    # Pagination (5 per page)
     pagination = query.order_by(Todo.id.desc()).paginate(
         page=page,
         per_page=5
