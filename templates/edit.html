@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Edit Task</h2>
+
+<form method="POST">
+    <input type="text" name="title" value="{{ task.title }}" required>
+
+    <select name="category" required>
+        <option value="Work" {% if task.category=='Work' %}selected{% endif %}>Work</option>
+        <option value="Personal" {% if task.category=='Personal' %}selected{% endif %}>Personal</option>
+    </select>
+
+    <input type="date" name="due_date" value="{{ task.due_date }}" required>
+
+    <label>
+        <input type="checkbox" name="completed" {% if task.completed %}checked{% endif %}>
+        Completed
+    </label>
+
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}
