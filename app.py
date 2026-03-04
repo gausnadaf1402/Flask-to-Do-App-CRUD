@@ -126,17 +126,35 @@ from flask_login import login_required, current_user
 def index():
 
     page = request.args.get('page', 1, type=int)
+    category = request.args.get('category')
+    status = request.args.get('status')
+    search = request.args.get('search')
 
-    pagination = Todo.query.filter_by(
-        user_id=current_user.id
-    ).order_by(Todo.id.desc()).paginate(
+    query = Todo.query.filter_by(user_id=current_user.id)
+
+    # 🔎 Filter by category
+    if category and category != "All":
+        query = query.filter(Todo.category == category)
+
+    # ✅ Filter by status
+    if status == "Completed":
+        query = query.filter(Todo.completed == True)
+    elif status == "Pending":
+        query = query.filter(Todo.completed == False)
+
+    # 🔍 Search by title
+    if search:
+        query = query.filter(Todo.title.ilike(f"%{search}%"))
+
+    # 📄 Pagination (5 per page)
+    pagination = query.order_by(Todo.id.desc()).paginate(
         page=page,
         per_page=5
     )
 
     tasks = pagination.items
 
-    # Dashboard counts (keep if you already added them)
+    # 📊 Dashboard counts (without filters — overall stats)
     total_tasks = Todo.query.filter_by(user_id=current_user.id).count()
     completed_tasks = Todo.query.filter_by(user_id=current_user.id, completed=True).count()
     pending_tasks = Todo.query.filter_by(user_id=current_user.id, completed=False).count()
@@ -149,7 +167,6 @@ def index():
         completed_tasks=completed_tasks,
         pending_tasks=pending_tasks
     )
-
 # @app.route('/add', methods=['POST'])
 # @login_required
 # def add():
