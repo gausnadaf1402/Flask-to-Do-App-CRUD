@@ -315,3 +315,19 @@ border-radius:8px;
 margin-bottom:15px;
 font-weight:bold;
 }
+
+.back-btn{
+    display: inline-block;
+    background: #2ecc71;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover{
+    background: #27ae60;
+    transform: translateY(-1px);
+}
