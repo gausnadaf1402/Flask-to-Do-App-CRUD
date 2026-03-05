@@ -159,14 +159,25 @@ def index():
     completed_tasks = Todo.query.filter_by(user_id=current_user.id, completed=True).count()
     pending_tasks = Todo.query.filter_by(user_id=current_user.id, completed=False).count()
 
+    today = date.today()
+    overdue_count = 0
+
+    for task in tasks:
+        if task.due_date and task.due_date < today and task.completed != "Completed":
+            overdue_count += 1
+
+    # overdue_count = len(overdue_tasks)
+
     return render_template(
         'index.html',
         tasks=tasks,
         pagination=pagination,
         total_tasks=total_tasks,
         completed_tasks=completed_tasks,
-        pending_tasks=pending_tasks
+        pending_tasks=pending_tasks,
+        overdue_count=overdue_count
     )
+
 # @app.route('/add', methods=['POST'])
 # @login_required
 # def add():

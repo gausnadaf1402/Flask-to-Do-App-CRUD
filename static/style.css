@@ -306,3 +306,12 @@ a[href*="delete"] {
     font-weight:400;
     color:black;
 }
+
+.alert{
+background:#ffdddd;
+color:#b30000;
+padding:12px;
+border-radius:8px;
+margin-bottom:15px;
+font-weight:bold;
+}

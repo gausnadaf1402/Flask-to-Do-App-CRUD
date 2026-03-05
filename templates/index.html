@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if overdue_count > 0 %}
+<div class="alert">
+⚠️ You have {{ overdue_count }} overdue tasks!
+</div>
+{% endif %}
 <div class="dashboard">
 
     <div class="card total">
@@ -21,7 +26,6 @@
 
 
 <form method="GET" class="filter-form">
-    <a href="{{ url_for('add_task') }}" class="add-btn">Add New Task</a>
 
     <input type="text" name="search" placeholder="Search task..."
            value="{{ request.args.get('search', '') }}">
@@ -52,6 +56,8 @@
 
     <button type="submit">Filter</button>
     <a href="{{ url_for('index') }}" class="reset-btn">Reset</a>
+
+    <a href="{{ url_for('add_task') }}" class="add-btn">Add New Task</a>
 
 </form>
 
