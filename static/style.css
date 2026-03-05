@@ -297,3 +297,12 @@ a[href*="delete"] {
     margin: 0 10px;
     font-weight: bold;
 }
+
+.add-btn{
+    background:#e5e5e5;
+    padding:8px 15px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:400;
+    color:black;
+}

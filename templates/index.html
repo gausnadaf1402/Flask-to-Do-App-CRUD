@@ -19,11 +19,9 @@
 
 </div>
 
-<a href="{{ url_for('add_task') }}">
-    <button>Add New Task</button>
-</a>
 
 <form method="GET" class="filter-form">
+    <a href="{{ url_for('add_task') }}" class="add-btn">Add New Task</a>
 
     <input type="text" name="search" placeholder="Search task..."
            value="{{ request.args.get('search', '') }}">
