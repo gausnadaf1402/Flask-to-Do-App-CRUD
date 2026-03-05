@@ -299,7 +299,7 @@ a[href*="delete"] {
 }
 
 .add-btn{
-    background:#e5e5e5;
+    background:white;
     padding:8px 15px;
     border-radius:6px;
     text-decoration:none;

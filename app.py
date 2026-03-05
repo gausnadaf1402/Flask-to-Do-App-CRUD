@@ -81,44 +81,8 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
-# @app.route('/')
-# @login_required
-# def index():
-#     tasks = Todo.query.filter_by(user_id=current_user.id).all()
-#     return render_template('index.html', tasks=tasks)
-
 from datetime import date
 from flask_login import login_required, current_user
-
-# @app.route('/')
-# @login_required
-# def index():
-
-#     tasks = Todo.query.filter_by(user_id=current_user.id).all()
-#     # Dashboard counts
-#     total_tasks = Todo.query.filter_by(user_id=current_user.id).count()
-#     completed_tasks = Todo.query.filter_by(
-#         user_id=current_user.id,
-#         completed=True
-#     ).count()
-#     pending_tasks = Todo.query.filter_by(
-#         user_id=current_user.id,
-#         completed=False
-#     ).count()
-#     overdue_tasks = Todo.query.filter(
-#         Todo.user_id == current_user.id,
-#         Todo.completed == False,
-#         Todo.due_date < date.today()
-#     ).count()
-#     return render_template(
-#         'index.html',
-#         tasks=tasks,
-#         total_tasks=total_tasks,
-#         completed_tasks=completed_tasks,
-#         pending_tasks=pending_tasks,
-#         overdue_tasks=overdue_tasks
-#     )
 
 
 @app.route('/')
@@ -154,19 +118,18 @@ def index():
 
     tasks = pagination.items
 
-    # 📊 Dashboard counts (without filters — overall stats)
+    # Dashboard counts (without filters — overall stats)
     total_tasks = Todo.query.filter_by(user_id=current_user.id).count()
     completed_tasks = Todo.query.filter_by(user_id=current_user.id, completed=True).count()
     pending_tasks = Todo.query.filter_by(user_id=current_user.id, completed=False).count()
 
+    #Overdue Tasks
     today = date.today()
     overdue_count = 0
 
     for task in tasks:
         if task.due_date and task.due_date < today and task.completed != "Completed":
             overdue_count += 1
-
-    # overdue_count = len(overdue_tasks)
 
     return render_template(
         'index.html',
@@ -177,26 +140,6 @@ def index():
         pending_tasks=pending_tasks,
         overdue_count=overdue_count
     )
-
-# @app.route('/add', methods=['POST'])
-# @login_required
-# def add():
-#     title = request.form.get('title')
-#     category = request.form.get('category')
-#     due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d').date()
-
-#     new_task = Todo(
-#         title=title,
-#         category=category,
-#         due_date=due_date,
-#         user_id=current_user.id
-#     )
-
-#     db.session.add(new_task)
-#     db.session.commit()
-
-#     flash("Task Added Successfully!")
-#     return redirect(url_for('index'))
 
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
